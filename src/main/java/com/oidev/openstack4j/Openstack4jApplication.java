@@ -9,5 +9,4 @@ public class Openstack4jApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Openstack4jApplication.class, args);
 	}
-
 }

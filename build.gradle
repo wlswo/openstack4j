@@ -17,7 +17,11 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// https://mvnrepository.com/artifact/org.pacesys/openstack4j
+	implementation group: 'org.pacesys', name: 'openstack4j', version: '3.2.0'
 }
 
 tasks.named('test') {
