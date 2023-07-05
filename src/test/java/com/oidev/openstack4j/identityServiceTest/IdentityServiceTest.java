@@ -43,7 +43,7 @@ public class IdentityServiceTest {
         os = OSFactory.builderV3()
                 .endpoint(AUTH_END_POINT)
                 .credentials(ID, PASSWORD, Identifier.byId(DOMAIN_NAME))
-                .scopeToProject(Identifier.byName(ID), Identifier.byId(DOMAIN_NAME))
+                .scopeToProject(Identifier.byName(PROJECT_NAME), Identifier.byId(DOMAIN_NAME))
                 .authenticate();
     }
 }
