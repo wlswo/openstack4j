@@ -20,6 +20,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1") {
+		exclude module:'junit-platform-commons'
+	}
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
+	testRuntimeOnly("org.junit.platform:junit-platform-engine:1.5.1")
+	testRuntimeOnly("org.junit.platform:junit-platform-commons:1.5.1")
+
 	// https://mvnrepository.com/artifact/org.pacesys/openstack4j
 	implementation group: 'org.pacesys', name: 'openstack4j', version: '3.2.0'
 
