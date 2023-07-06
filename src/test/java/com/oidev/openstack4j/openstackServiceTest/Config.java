@@ -36,12 +36,11 @@ public class Config {
                 '}';
     }
 
-    public Config() {
-        System.out.println(AUTH_END_POINT);
-        this.os = OSFactory.builderV3()
-                .endpoint(AUTH_END_POINT)
-                .credentials(ID, PASSWORD, Identifier.byId(DOMAIN_NAME))
-                .scopeToProject(Identifier.byName(PROJECT_NAME), Identifier.byId(DOMAIN_NAME))
+    public OSClientV3 getOS() {
+        return OSFactory.builderV3()
+                .endpoint(this.AUTH_END_POINT)
+                .credentials(this.ID, this.PASSWORD, Identifier.byId(this.DOMAIN_NAME))
+                .scopeToProject(Identifier.byName(this.PROJECT_NAME), Identifier.byId(this.DOMAIN_NAME))
                 .authenticate();
     }
 }
