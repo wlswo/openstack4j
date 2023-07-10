@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@PropertySource("classpath:application.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ComputeServiceTest {
 
@@ -56,6 +55,7 @@ public class ComputeServiceTest {
                 .image("2d6e787f-4e57-41ac-a1e0-d1eacbe59b75")
                 .networks(networks)
                 .build();
+
         Server server = os.compute().servers().bootAndWaitActive(sc, 1000);
         os.compute().servers().waitForServerStatus(server.getId(), Server.Status.ACTIVE, 2000, TimeUnit.MILLISECONDS);
         assertThat(server.getStatus()).isEqualTo(Server.Status.BUILD);
@@ -69,7 +69,6 @@ public class ComputeServiceTest {
         Server s = servers.stream().filter(server -> server.getName().equals(SERVER_NAME)).findFirst().orElseThrow(() -> new NotFoundException());
         assertThat(os.compute().servers().action(s.getId(), Action.STOP).isSuccess()).isEqualTo(true);
         os.compute().servers().waitForServerStatus(s.getId(), Server.Status.STOPPED, 2000, TimeUnit.MILLISECONDS);
-
     }
 
     @Test
@@ -78,9 +77,8 @@ public class ComputeServiceTest {
     void startServer() {
         List<? extends Server> servers = os.compute().servers().list();
         Server s = servers.stream().filter(server -> server.getName().equals(SERVER_NAME)).findFirst().orElseThrow(() -> new NotFoundException());
-        os.compute().servers().action(s.getId(), Action.START);
+        os.compute().servers().action(s.getId(), Action.START).isSuccess();
         os.compute().servers().waitForServerStatus(s.getId(), Server.Status.ACTIVE, 2000, TimeUnit.MILLISECONDS);
-
         assertThat(s.getStatus()).isEqualTo(Server.Status.ACTIVE);
     }
 
@@ -88,12 +86,8 @@ public class ComputeServiceTest {
     @DisplayName("Server Delete")
     @Order(5)
     void deleteServer() {
-
         List<? extends Server> servers = os.compute().servers().list();
-        Server server = servers.stream().filter(s ->
-                s.getName().equals(SERVER_NAME)
-        ).findFirst().orElseThrow(() -> new NotFoundException());
-
+        Server server = servers.stream().filter(s -> s.getName().equals(SERVER_NAME)).findFirst().orElseThrow(() -> new NotFoundException());
         ActionResponse status = os.compute().servers().delete(server.getId());
         assertThat(status.getCode()).isEqualTo(200);
     }

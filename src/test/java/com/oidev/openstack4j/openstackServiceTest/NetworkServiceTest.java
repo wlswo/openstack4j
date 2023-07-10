@@ -4,7 +4,6 @@ package com.oidev.openstack4j.openstackServiceTest;
 import org.junit.jupiter.api.*;
 import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient;
-import org.openstack4j.model.identity.v3.Tenant;
 import org.openstack4j.model.network.Network;
 import org.openstack4j.model.network.State;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @PropertySource("classpath:application.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class FlavorServiceTest {
+public class NetworkServiceTest {
 
     @Autowired
     private Config config;
@@ -59,6 +58,6 @@ public class FlavorServiceTest {
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException());
 
-        assertThat(os.networking().network().delete(n.getId()).isSuccess()).isEqualTo(true);
+        assertThat(os.networking().network().delete(n.getId()).isSuccess()).isTrue();
     }
 }
