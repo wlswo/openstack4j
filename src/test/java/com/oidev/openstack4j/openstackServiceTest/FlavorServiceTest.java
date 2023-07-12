@@ -6,7 +6,6 @@ import org.openstack4j.api.OSClient;
 import org.openstack4j.model.compute.Flavor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 
