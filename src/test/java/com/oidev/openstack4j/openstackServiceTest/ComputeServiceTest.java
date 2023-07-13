@@ -12,7 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ComputeServiceTest {
 
     @Autowired
-    private Config config;
+    private TestConfig testConfig;
     public OSClient.OSClientV3 os;
     private final String SERVER_NAME = "openstack4j-test-server";
     private final String NETWORK_ID = "475a7608-e09f-475a-b584-2c37a7f67d1c";
@@ -36,22 +38,33 @@ public class ComputeServiceTest {
 
     @BeforeAll
     void initConfig() {
-        os = config.getOS();
+        os = testConfig.getOS();
         assertThat(os.getToken()).isNotNull();
     }
 
     @Test
     @DisplayName("List all Servers")
-    @Order(1)
+    @Order(100)
     void getServerList() {
         List<? extends Server> servers = os.compute().servers().list();
         assertThat(servers).isNotNull();
     }
 
     @Test
+    @DisplayName("List all Server Query String")
+    @Order(101)
+    void getServerListToQuery() {
+        Map<String, String> filter = new HashMap<>();
+        filter.put("status","ACTIVE");
+        List<? extends Server> servers = os.compute().servers().list(filter);
+        assertThat(servers.size()).isEqualTo(3);
+    }
+
+    @Test
     @DisplayName("Server Create")
-    @Order(2)
+    @Order(200)
     void createServer() {
+
         List<String> networks = new ArrayList<>();
         networks.add(NETWORK_ID);
 
@@ -71,7 +84,7 @@ public class ComputeServiceTest {
 
     @Test
     @DisplayName("Stop Server")
-    @Order(3)
+    @Order(300)
     void stopServer() {
         List<? extends Server> servers = os.compute().servers().list();
         Server s = servers.stream().filter(server -> server.getId().equals(SERVER_ID)).findAny().orElseThrow(() -> new NotFoundException());
@@ -81,7 +94,7 @@ public class ComputeServiceTest {
 
     @Test
     @DisplayName("Start Server")
-    @Order(4)
+    @Order(400)
     void startServer() {
         List<? extends Server> servers = os.compute().servers().list();
         Server s = servers.stream().filter(server -> server.getId().equals(SERVER_ID)).findAny().orElseThrow(() -> new NotFoundException());
@@ -92,7 +105,7 @@ public class ComputeServiceTest {
 
     @Test
     @DisplayName("Server Delete")
-    @Order(5)
+    @Order(500)
     void deleteServer() {
         List<? extends Server> servers = os.compute().servers().list();
         Server server = servers.stream().filter(s -> s.getId().equals(SERVER_ID)).findAny().orElseThrow(() -> new NotFoundException());
