@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Getter @Setter
-public class Config {
+public class TestConfig {
 
     @Value("${openstack.id}")
     private String ID;
