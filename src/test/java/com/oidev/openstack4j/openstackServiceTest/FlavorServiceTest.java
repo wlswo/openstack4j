@@ -6,6 +6,7 @@ import org.openstack4j.api.OSClient;
 import org.openstack4j.model.compute.Flavor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 
@@ -19,13 +20,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FlavorServiceTest {
 
     @Autowired
-    private Config config;
+    private TestConfig testConfig;
     public OSClient.OSClientV3 os;
     private final String FLAVOR_NAME = "test_flavor";
 
     @BeforeEach
     void initConfig() {
-        os = config.getOS();
+        os = testConfig.getOS();
         assertThat(os.getToken()).isNotNull();
     }
 
