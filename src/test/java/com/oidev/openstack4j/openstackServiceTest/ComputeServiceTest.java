@@ -30,7 +30,8 @@ public class ComputeServiceTest {
     private final String SERVER_NAME = "openstack4j-test-server";
     private final String NETWORK_ID = "475a7608-e09f-475a-b584-2c37a7f67d1c";
     private final String IMAGE_ID = "2d6e787f-4e57-41ac-a1e0-d1eacbe59b75";
-    private final String FLAVOR_ID = "1";
+    private final String FLAVOR_ID = "1"; //m1.small
+    private final String FLAVOR_ID2 = "d23abccb-65c6-4b1e-bd00-682487cac48b"; //test
     private final int MAX_WAIT_TIME = 2000;
     private final int SUCCESS_STATUS = 200;
 
@@ -83,9 +84,20 @@ public class ComputeServiceTest {
     }
 
     @Test
+    @DisplayName("Resizing Server")
+    @Order(201)
+    void resizeServer() {
+        ActionResponse actionResponse = os.compute().servers().resize("017cd9c9-f809-4fd4-ad91-27451f80c22e", FLAVOR_ID2);
+        System.out.println(actionResponse);
+        actionResponse = os.compute().servers().confirmResize("017cd9c9-f809-4fd4-ad91-27451f80c22e");
+        System.out.println(actionResponse);
+    }
+
+    @Test
     @DisplayName("Stop Server")
     @Order(300)
     void stopServer() {
+
         List<? extends Server> servers = os.compute().servers().list();
         Server s = servers.stream().filter(server -> server.getId().equals(SERVER_ID)).findAny().orElseThrow(() -> new NotFoundException());
         assertThat(os.compute().servers().action(s.getId(), Action.STOP).isSuccess()).isEqualTo(true);
