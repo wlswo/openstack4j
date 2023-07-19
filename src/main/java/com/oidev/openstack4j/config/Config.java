@@ -24,7 +24,7 @@ public class Config {
     @Value("${openstack.project_name}")
     private String PROJECT_NAME;
 
-    public OSClientV3 os;
+    private OSClientV3 os;
 
     @Override
     public String toString() {
