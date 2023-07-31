@@ -21,13 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class NetworkServiceTest {
 
     @Autowired
-    private Config config;
+    private TestConfig testConfig;
     public OSClient.OSClientV3 os;
     private final String NETWORK_NAME = "test_network";
 
     @BeforeEach
     void initConfig() {
-        os = config.getOS();
+        os = testConfig.getOS();
         assertThat(os.getToken()).isNotNull();
     }
 
