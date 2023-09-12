@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@Getter @Setter
+@Getter
+@Setter
 public class TestConfig {
 
     @Value("${openstack.id}")

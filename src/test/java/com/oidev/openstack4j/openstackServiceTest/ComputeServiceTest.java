@@ -1,5 +1,6 @@
 package com.oidev.openstack4j.openstackServiceTest;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.*;
 import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient;
@@ -48,6 +49,7 @@ public class ComputeServiceTest {
     @Order(100)
     void getServerList() {
         List<? extends Server> servers = os.compute().servers().list();
+        String gson = new Gson().toJson(servers);
         assertThat(servers).isNotNull();
     }
 
