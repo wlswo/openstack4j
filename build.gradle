@@ -18,11 +18,15 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.google.code.gson:gson:2.10.1'
+
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1") {
 		exclude module:'junit-platform-commons'
 	}
+	testImplementation 'org.projectlombok:lombok:1.18.26'
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-engine:1.5.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-commons:1.5.1")
@@ -31,7 +35,8 @@ dependencies {
 	implementation group: 'org.pacesys', name: 'openstack4j', version: '3.2.0'
 
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	implementation 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
