@@ -1,17 +1,17 @@
-package com.oidev.openstack4j.config;
+package com.oidev.openstack4j.entity;
 
 import lombok.Getter;
-import org.openstack4j.api.OSClient.OSClientV3;
+import lombok.Setter;
+import org.openstack4j.api.OSClient;
 import org.openstack4j.model.common.Identifier;
 import org.openstack4j.openstack.OSFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
-
 @Configuration
 @Getter
-public class Config {
+@Setter
+public class OsClientV3 {
 
     @Value("${openstack.id}")
     private String ID;
@@ -24,7 +24,6 @@ public class Config {
     @Value("${openstack.project_name}")
     private String PROJECT_NAME;
 
-    private OSClientV3 os;
 
     @Override
     public String toString() {
@@ -37,16 +36,7 @@ public class Config {
                 '}';
     }
 
-    @PostConstruct
-    public void InjectionOSClientV3() {
-        this.os = OSFactory.builderV3()
-                .endpoint(this.AUTH_END_POINT)
-                .credentials(this.ID, this.PASSWORD, Identifier.byId(this.DOMAIN_NAME))
-                .scopeToProject(Identifier.byName(this.PROJECT_NAME), Identifier.byId(this.DOMAIN_NAME))
-                .authenticate();
-    }
-
-    public OSClientV3 issueToken() {
+    public OSClient.OSClientV3 getOS() {
         return OSFactory.builderV3()
                 .endpoint(this.AUTH_END_POINT)
                 .credentials(this.ID, this.PASSWORD, Identifier.byId(this.DOMAIN_NAME))
