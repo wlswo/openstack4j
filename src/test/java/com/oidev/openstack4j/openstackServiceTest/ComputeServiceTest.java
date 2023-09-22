@@ -30,7 +30,7 @@ public class ComputeServiceTest {
     public OSClient.OSClientV3 os;
     private final String SERVER_NAME = "openstack4j-test-server";
     private final String NETWORK_ID = "475a7608-e09f-475a-b584-2c37a7f67d1c";
-    private final String IMAGE_ID = "2d6e787f-4e57-41ac-a1e0-d1eacbe59b75";
+    private final String IMAGE_ID = "2d6e787f-4e57-41ac-a1e0-d1eacbe59b75"; //cirros
     private final String FLAVOR_ID = "1"; //m1.small
     private final String FLAVOR_ID2 = "d23abccb-65c6-4b1e-bd00-682487cac48b"; //test
     private final int MAX_WAIT_TIME = 2000;
@@ -74,7 +74,7 @@ public class ComputeServiceTest {
         ServerCreate sc = Builders.server()
                 .name(SERVER_NAME)
                 .flavor(FLAVOR_ID)
-                .image(IMAGE_ID)
+                .image("cb5ac86e-2133-4563-a237-c2917fbc0eec")
                 .networks(networks)
                 .build();
 
